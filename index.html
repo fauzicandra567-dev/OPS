@@ -119,7 +119,7 @@
                     <div class="bg-white p-2 rounded-lg mr-3">
                         <img src="https://iili.io/BeNtJTJ.png" class="w-8 h-8 object-contain">
                     </div>
-                    <span class="self-center text-xl font-bold whitespace-nowrap">ADM SDN 22 TK</span>
+                    <span class="self-center text-xl font-bold whitespace-nowrap">SDN 22 TK</span>
                 </div>
                 <ul class="space-y-2 font-medium">
                     <li>
@@ -276,8 +276,8 @@
                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Nama Pengelola</td>
                                 <td class="py-3 text-slate-800 font-medium">Fauzi, S.Hum</td>
-                             </tr>
-                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                            </tr>
+                            <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">NIP</td>
                                 <td class="py-3 text-slate-800 font-medium">199302082025211109</td>
                             </tr>
@@ -586,10 +586,11 @@
     <div id="student-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto fade-in">
             <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-                <h3 class="text-xl font-bold text-blue-900">Form Data Siswa</h3>
+                <h3 id="student-modal-title" class="text-xl font-bold text-blue-900">Form Data Siswa</h3>
                 <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
             </div>
             <form id="student-form" onsubmit="saveStudent(event)" class="p-6 space-y-4">
+                <input type="hidden" name="id">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="col-span-2"><label class="text-xs font-bold uppercase">Nama Lengkap</label><input type="text" name="nama" required class="w-full border p-2 rounded"></div>
                     <div><label class="text-xs font-bold uppercase">JK</label><select name="jk" class="w-full border p-2 rounded"><option value="L">L</option><option value="P">P</option></select></div>
@@ -607,8 +608,9 @@
 
     <div id="induk-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-md fade-in">
-            <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold">Registrasi Buku Induk</h3><button onclick="closeIndukModal()"><i class="fas fa-times"></i></button></div>
-            <form onsubmit="saveBukuInduk(event)" class="space-y-4">
+            <div class="flex justify-between items-center mb-4"><h3 id="induk-modal-title" class="text-lg font-bold">Registrasi Buku Induk</h3><button onclick="closeIndukModal()"><i class="fas fa-times"></i></button></div>
+            <form id="induk-form" onsubmit="saveBukuInduk(event)" class="space-y-4">
+                <input type="hidden" id="induk-edit-id">
                 <div><label class="text-xs font-bold uppercase">Pilih Siswa</label><select id="induk-siswa-select" required class="w-full border p-2 rounded text-sm"></select></div>
                 <div><label class="text-xs font-bold uppercase">Tahun Pelajaran</label><input type="text" id="induk-tapel-form" required placeholder="Contoh: 2024/2025" class="w-full border p-2 rounded text-sm"></div>
                 <div><label class="text-xs font-bold uppercase">Tanggal Masuk</label><input type="date" id="induk-tgl" required class="w-full border p-2 rounded text-sm"></div>
@@ -619,8 +621,9 @@
 
     <div id="mutasi-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-md fade-in">
-            <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold">Log Mutasi Siswa</h3><button onclick="closeMutasiModal()"><i class="fas fa-times"></i></button></div>
+            <div class="flex justify-between items-center mb-4"><h3 id="mutasi-modal-title" class="text-lg font-bold">Log Mutasi Siswa</h3><button onclick="closeMutasiModal()"><i class="fas fa-times"></i></button></div>
             <form id="mutasi-form" onsubmit="saveMutasi(event)" class="space-y-4">
+                <input type="hidden" name="id">
                 <div><label class="text-xs font-bold uppercase">Nama Siswa</label><input type="text" name="nama" required class="w-full border p-2 rounded text-sm"></div>
                 <div>
                     <label class="text-xs font-bold uppercase">Jenis Mutasi</label>
@@ -641,8 +644,9 @@
 
     <div id="surat-masuk-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-2xl fade-in">
-            <div class="flex justify-between items-center mb-4 border-b pb-2"><h3 class="text-lg font-bold text-blue-900">Input Surat Masuk</h3><button onclick="closeSuratMasukModal()"><i class="fas fa-times"></i></button></div>
-            <form onsubmit="saveSuratMasuk(event)" class="space-y-4">
+            <div class="flex justify-between items-center mb-4 border-b pb-2"><h3 id="sm-modal-title" class="text-lg font-bold text-blue-900">Input Surat Masuk</h3><button onclick="closeSuratMasukModal()"><i class="fas fa-times"></i></button></div>
+            <form id="sm-form" onsubmit="saveSuratMasuk(event)" class="space-y-4">
+                <input type="hidden" name="id">
                 <div class="grid grid-cols-2 gap-4">
                     <div><label class="text-xs font-bold uppercase">No. Surat</label><input type="text" name="noSurat" required class="w-full border p-2 rounded text-sm"></div>
                     <div><label class="text-xs font-bold uppercase">Pengirim</label><input type="text" name="pengirim" required class="w-full border p-2 rounded text-sm"></div>
@@ -659,8 +663,9 @@
 
     <div id="surat-keluar-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-2xl fade-in">
-            <div class="flex justify-between items-center mb-4 border-b pb-2"><h3 class="text-lg font-bold text-blue-900">Input Surat Keluar</h3><button onclick="closeSuratKeluarModal()"><i class="fas fa-times"></i></button></div>
-            <form onsubmit="saveSuratKeluar(event)" class="space-y-4">
+            <div class="flex justify-between items-center mb-4 border-b pb-2"><h3 id="sk-modal-title" class="text-lg font-bold text-blue-900">Input Surat Keluar</h3><button onclick="closeSuratKeluarModal()"><i class="fas fa-times"></i></button></div>
+            <form id="sk-form" onsubmit="saveSuratKeluar(event)" class="space-y-4">
+                <input type="hidden" name="id">
                 <div class="grid grid-cols-2 gap-4">
                     <div><label class="text-xs font-bold uppercase">No. Surat</label><input type="text" name="noSurat" required class="w-full border p-2 rounded text-sm"></div>
                     <div><label class="text-xs font-bold uppercase">Tujuan</label><input type="text" name="tujuan" required class="w-full border p-2 rounded text-sm"></div>
@@ -675,10 +680,11 @@
     <div id="spj-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto fade-in">
             <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-                <h3 class="text-xl font-bold text-blue-900">Form Input SPJ BOSP</h3>
+                <h3 id="spj-modal-title" class="text-xl font-bold text-blue-900">Form Input SPJ BOSP</h3>
                 <button onclick="closeSpjModal()"><i class="fas fa-times"></i></button>
             </div>
-            <form onsubmit="saveSpj(event)" class="p-6 space-y-4">
+            <form id="spj-form" onsubmit="saveSpj(event)" class="p-6 space-y-4">
+                <input type="hidden" name="id">
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div><label class="text-xs font-bold uppercase">No BKU</label><input type="text" name="noBku" required class="w-full border p-2 rounded"></div>
                     <div><label class="text-xs font-bold uppercase">Kode Rekening</label><input type="text" name="kodeRekening" required class="w-full border p-2 rounded"></div>
@@ -783,40 +789,186 @@
             const fNama = document.getElementById('filter-siswa-nama').value.toLowerCase();
             const fKelas = document.getElementById('filter-siswa-kelas').value;
             const filtered = students.filter(s => s.nama.toLowerCase().includes(fNama) && (fKelas === "" || s.kelas === fKelas));
-            document.getElementById('student-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3">${s.nama}</td><td class="p-3">${s.jk}</td><td class="p-3 font-semibold text-blue-800">${s.kelas}</td><td class="p-3 font-mono">${s.nik || '-'}</td><td class="p-3 font-mono text-xs">${s.nisn}/${s.nis}</td><td class="p-3 text-center"><button onclick="deleteStudent(${s.id})" class="text-red-500 hover:bg-red-50 p-2 rounded transition-all"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+            document.getElementById('student-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3">${s.nama}</td><td class="p-3">${s.jk}</td><td class="p-3 font-semibold text-blue-800">${s.kelas}</td><td class="p-3 font-mono">${s.nik || '-'}</td><td class="p-3 font-mono text-xs">${s.nisn}/${s.nis}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editStudent(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteStudent(${s.id})" class="text-red-500 hover:bg-red-50 p-2 rounded transition-all"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
 
         function renderIndukTable() { 
             const fNama = document.getElementById('filter-induk-nama').value.toLowerCase();
             const fTapel = document.getElementById('filter-induk-tapel').value.toLowerCase();
             const filtered = bukuInduk.filter(b => (b.nama || '').toLowerCase().includes(fNama) && (b.tapel || '').toLowerCase().includes(fTapel));
-            document.getElementById('induk-table-body').innerHTML = filtered.map(b => `<tr><td class="p-3 font-mono">${b.nis}</td><td class="p-3 font-bold">${b.nama}</td><td class="p-3">${b.jk}</td><td class="p-3 font-medium text-blue-700">${b.tapel || '-'}</td><td class="p-3">${b.tglMasukInduk}</td><td class="p-3 text-center"><button onclick="deleteInduk(${b.idInduk})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+            document.getElementById('induk-table-body').innerHTML = filtered.map(b => `<tr><td class="p-3 font-mono">${b.nis}</td><td class="p-3 font-bold">${b.nama}</td><td class="p-3">${b.jk}</td><td class="p-3 font-medium text-blue-700">${b.tapel || '-'}</td><td class="p-3">${b.tglMasukInduk}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editInduk(${b.idInduk})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteInduk(${b.idInduk})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
         }
 
         function renderMutasiTable() { 
             const fNama = document.getElementById('filter-mutasi-nama').value.toLowerCase();
             const fTapel = document.getElementById('filter-mutasi-tapel').value.toLowerCase();
             const filtered = bukuMutasi.filter(m => (m.nama || '').toLowerCase().includes(fNama) && (m.tapel || '').toLowerCase().includes(fTapel));
-            document.getElementById('mutasi-table-body').innerHTML = filtered.map(m => { const infoSekolah = m.jenis === 'Masuk' ? (m.asalSekolah || '-') : (m.tujuanSekolah || '-'); return `<tr><td class="p-3">${m.tanggal}</td><td class="p-3 font-bold">${m.nama}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] ${m.jenis === 'Masuk' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${m.jenis}</span></td><td class="p-3 font-medium text-blue-700">${m.tapel || '-'}</td><td class="p-3">${infoSekolah}</td><td class="p-3 text-center"><button onclick="deleteMutasi(${m.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>`; }).join(''); 
+            document.getElementById('mutasi-table-body').innerHTML = filtered.map(m => { const infoSekolah = m.jenis === 'Masuk' ? (m.asalSekolah || '-') : (m.tujuanSekolah || '-'); return `<tr><td class="p-3">${m.tanggal}</td><td class="p-3 font-bold">${m.nama}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] ${m.jenis === 'Masuk' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${m.jenis}</span></td><td class="p-3 font-medium text-blue-700">${m.tapel || '-'}</td><td class="p-3">${infoSekolah}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editMutasi(${m.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteMutasi(${m.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>`; }).join(''); 
         }
 
-        function renderSuratMasukTable() { const start = document.getElementById('filter-sm-start').value; const end = document.getElementById('filter-sm-end').value; let filtered = suratMasuk; if(start && end) filtered = suratMasuk.filter(s => s.tglMenerima >= start && s.tglMenerima <= end); document.getElementById('surat-masuk-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglMenerima}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.pengirim}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center"><button onclick="deleteSuratMasuk(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function renderSuratKeluarTable() { const start = document.getElementById('filter-sk-start').value; const end = document.getElementById('filter-sk-end').value; let filtered = suratKeluar; if(start && end) filtered = suratKeluar.filter(s => s.tglSurat >= start && s.tglSurat <= end); document.getElementById('surat-keluar-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglSurat}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.tujuan}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center"><button onclick="deleteSuratKeluar(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function renderSuratMasukTable() { const start = document.getElementById('filter-sm-start').value; const end = document.getElementById('filter-sm-end').value; let filtered = suratMasuk; if(start && end) filtered = suratMasuk.filter(s => s.tglMenerima >= start && s.tglMenerima <= end); document.getElementById('surat-masuk-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglMenerima}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.pengirim}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editSuratMasuk(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSuratMasuk(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function renderSuratKeluarTable() { const start = document.getElementById('filter-sk-start').value; const end = document.getElementById('filter-sk-end').value; let filtered = suratKeluar; if(start && end) filtered = suratKeluar.filter(s => s.tglSurat >= start && s.tglSurat <= end); document.getElementById('surat-keluar-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglSurat}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.tujuan}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editSuratKeluar(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSuratKeluar(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
         
         function renderSpjTable() { 
             const q = document.getElementById('search-bku').value.toLowerCase(); 
             const f = spjBosp.filter(s => s.noBku.toLowerCase().includes(q)); 
-            document.getElementById('spj-table-body').innerHTML = f.map(s => `<tr><td class="p-3 font-bold font-mono text-blue-700">${s.noBku}</td><td class="p-3 text-xs">${s.tglKuitansi}</td><td class="p-3 font-semibold">${s.penerima}</td><td class="p-3 text-[11px] italic text-slate-500 max-w-[200px] truncate" title="${s.untukPembayaran}">${s.untukPembayaran}</td><td class="p-3 font-bold">Rp ${parseInt(s.jumlahUang).toLocaleString()}</td><td class="p-3 text-center flex justify-center gap-2"><button onclick="downloadSingleSpj(${s.id})" class="text-blue-600 hover:bg-blue-50 p-2 rounded transition-all"><i class="fas fa-print"></i></button><button onclick="deleteSpj(${s.id})" class="text-red-500 p-2 rounded transition-all hover:bg-red-50"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+            document.getElementById('spj-table-body').innerHTML = f.map(s => `<tr><td class="p-3 font-bold font-mono text-blue-700">${s.noBku}</td><td class="p-3 text-xs">${s.tglKuitansi}</td><td class="p-3 font-semibold">${s.penerima}</td><td class="p-3 text-[11px] italic text-slate-500 max-w-[200px] truncate" title="${s.untukPembayaran}">${s.untukPembayaran}</td><td class="p-3 font-bold">Rp ${parseInt(s.jumlahUang).toLocaleString()}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="downloadSingleSpj(${s.id})" class="text-blue-600 hover:bg-blue-50 p-2 rounded transition-all"><i class="fas fa-print"></i></button><button onclick="editSpj(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSpj(${s.id})" class="text-red-500 p-2 rounded transition-all hover:bg-red-50"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
         }
 
         function renderAllTables() { renderTable(); renderIndukTable(); renderMutasiTable(); renderSuratMasukTable(); renderSuratKeluarTable(); renderSpjTable(); }
 
-        function saveStudent(e) { e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); d.id = Date.now(); students.push(d); saveData(); updateClassFilter(); renderTable(); updateStats(); closeModal(); e.target.reset(); }
-        function saveBukuInduk(e) { e.preventDefault(); const sid = document.getElementById('induk-siswa-select').value; const tapel = document.getElementById('induk-tapel-form').value; const stu = students.find(s => s.id == sid); bukuInduk.push({ ...stu, idInduk: Date.now(), tapel: tapel, tglMasukInduk: document.getElementById('induk-tgl').value }); saveData(); renderIndukTable(); updateStats(); closeIndukModal(); }
-        function saveMutasi(e) { e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); d.id = Date.now(); bukuMutasi.push(d); saveData(); renderMutasiTable(); closeMutasiModal(); e.target.reset(); }
-        function saveSuratMasuk(e) { e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); d.id = Date.now(); suratMasuk.push(d); saveData(); renderSuratMasukTable(); updateStats(); closeSuratMasukModal(); e.target.reset(); }
-        function saveSuratKeluar(e) { e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); d.id = Date.now(); suratKeluar.push(d); saveData(); renderSuratKeluarTable(); updateStats(); closeSuratKeluarModal(); e.target.reset(); }
-        function saveSpj(e) { e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); d.id = Date.now(); spjBosp.push(d); saveData(); renderSpjTable(); updateStats(); closeSpjModal(); e.target.reset(); }
+        // --- Core Functions: Save Data (Update if exists) ---
+        function saveStudent(e) { 
+            e.preventDefault(); 
+            const f = e.target;
+            const d = Object.fromEntries(new FormData(f)); 
+            if (d.id) {
+                const idx = students.findIndex(s => s.id == d.id);
+                if (idx !== -1) students[idx] = d;
+                showToast("Data diperbarui!");
+            } else {
+                d.id = Date.now(); 
+                students.push(d); 
+                showToast("Data ditambahkan!");
+            }
+            saveData(); updateClassFilter(); renderTable(); updateStats(); closeModal(); f.reset(); 
+        }
+
+        function saveBukuInduk(e) { 
+            e.preventDefault(); 
+            const sid = document.getElementById('induk-siswa-select').value; 
+            const tapel = document.getElementById('induk-tapel-form').value; 
+            const editId = document.getElementById('induk-edit-id').value;
+            const stu = students.find(s => s.id == sid); 
+            
+            if (editId) {
+                const idx = bukuInduk.findIndex(b => b.idInduk == editId);
+                if (idx !== -1) bukuInduk[idx] = { ...stu, idInduk: editId, tapel: tapel, tglMasukInduk: document.getElementById('induk-tgl').value };
+                showToast("Induk diperbarui!");
+            } else {
+                bukuInduk.push({ ...stu, idInduk: Date.now(), tapel: tapel, tglMasukInduk: document.getElementById('induk-tgl').value }); 
+                showToast("Registrasi berhasil!");
+            }
+            saveData(); renderIndukTable(); updateStats(); closeIndukModal(); 
+        }
+
+        function saveMutasi(e) { 
+            e.preventDefault(); 
+            const d = Object.fromEntries(new FormData(e.target)); 
+            if (d.id) {
+                const idx = bukuMutasi.findIndex(m => m.id == d.id);
+                if (idx !== -1) bukuMutasi[idx] = d;
+                showToast("Log diperbarui!");
+            } else {
+                d.id = Date.now(); 
+                bukuMutasi.push(d); 
+                showToast("Log ditambahkan!");
+            }
+            saveData(); renderMutasiTable(); closeMutasiModal(); e.target.reset(); 
+        }
+
+        function saveSuratMasuk(e) { 
+            e.preventDefault(); 
+            const d = Object.fromEntries(new FormData(e.target)); 
+            if (d.id) {
+                const idx = suratMasuk.findIndex(s => s.id == d.id);
+                if (idx !== -1) suratMasuk[idx] = d;
+                showToast("Surat diperbarui!");
+            } else {
+                d.id = Date.now(); 
+                suratMasuk.push(d); 
+                showToast("Surat masuk disimpan!");
+            }
+            saveData(); renderSuratMasukTable(); updateStats(); closeSuratMasukModal(); e.target.reset(); 
+        }
+
+        function saveSuratKeluar(e) { 
+            e.preventDefault(); 
+            const d = Object.fromEntries(new FormData(e.target)); 
+            if (d.id) {
+                const idx = suratKeluar.findIndex(s => s.id == d.id);
+                if (idx !== -1) suratKeluar[idx] = d;
+                showToast("Surat diperbarui!");
+            } else {
+                d.id = Date.now(); 
+                suratKeluar.push(d); 
+                showToast("Surat keluar disimpan!");
+            }
+            saveData(); renderSuratKeluarTable(); updateStats(); closeSuratKeluarModal(); e.target.reset(); 
+        }
+
+        function saveSpj(e) { 
+            e.preventDefault(); 
+            const d = Object.fromEntries(new FormData(e.target)); 
+            if (d.id) {
+                const idx = spjBosp.findIndex(s => s.id == d.id);
+                if (idx !== -1) spjBosp[idx] = d;
+                showToast("SPJ diperbarui!");
+            } else {
+                d.id = Date.now(); 
+                spjBosp.push(d); 
+                showToast("SPJ disimpan!");
+            }
+            saveData(); renderSpjTable(); updateStats(); closeSpjModal(); e.target.reset(); 
+        }
+
+        // --- Edit Functions ---
+        function editStudent(id) {
+            const s = students.find(item => item.id == id);
+            if (!s) return;
+            const form = document.getElementById('student-form');
+            Object.keys(s).forEach(key => { if(form[key]) form[key].value = s[key]; });
+            document.getElementById('student-modal-title').innerText = "Edit Data Siswa";
+            openModal();
+        }
+
+        function editInduk(id) {
+            const b = bukuInduk.find(item => item.idInduk == id);
+            if (!b) return;
+            document.getElementById('induk-edit-id').value = id;
+            document.getElementById('induk-siswa-select').innerHTML = students.map(s => `<option value="${s.id}" ${s.nis == b.nis ? 'selected' : ''}>${s.nama} (${s.nis})</option>`).join('');
+            document.getElementById('induk-tapel-form').value = b.tapel;
+            document.getElementById('induk-tgl').value = b.tglMasukInduk;
+            document.getElementById('induk-modal-title').innerText = "Edit Registrasi Induk";
+            document.getElementById('induk-modal').classList.remove('hidden');
+        }
+
+        function editMutasi(id) {
+            const m = bukuMutasi.find(item => item.id == id);
+            if (!m) return;
+            const form = document.getElementById('mutasi-form');
+            Object.keys(m).forEach(key => { if(form[key]) form[key].value = m[key]; });
+            document.getElementById('mutasi-modal-title').innerText = "Edit Log Mutasi";
+            openMutasiModal();
+        }
+
+        function editSuratMasuk(id) {
+            const s = suratMasuk.find(item => item.id == id);
+            if (!s) return;
+            const form = document.getElementById('sm-form');
+            Object.keys(s).forEach(key => { if(form[key]) form[key].value = s[key]; });
+            document.getElementById('sm-modal-title').innerText = "Edit Surat Masuk";
+            openSuratMasukModal();
+        }
+
+        function editSuratKeluar(id) {
+            const s = suratKeluar.find(item => item.id == id);
+            if (!s) return;
+            const form = document.getElementById('sk-form');
+            Object.keys(s).forEach(key => { if(form[key]) form[key].value = s[key]; });
+            document.getElementById('sk-modal-title').innerText = "Edit Surat Keluar";
+            openSuratKeluarModal();
+        }
+
+        function editSpj(id) {
+            const s = spjBosp.find(item => item.id == id);
+            if (!s) return;
+            const form = document.getElementById('spj-form');
+            Object.keys(s).forEach(key => { if(form[key]) form[key].value = s[key]; });
+            document.getElementById('spj-modal-title').innerText = "Edit Data SPJ";
+            openSpjModal();
+            updateTerbilang();
+        }
 
         function deleteStudent(id) { if(confirm("Hapus?")) { students = students.filter(s => s.id !== id); saveData(); updateClassFilter(); renderTable(); updateStats(); }}
         function deleteInduk(id) { if(confirm("Hapus?")) { bukuInduk = bukuInduk.filter(b => b.idInduk !== id); saveData(); renderIndukTable(); updateStats(); }}
@@ -826,19 +978,29 @@
         function deleteSpj(id) { if(confirm("Hapus?")) { spjBosp = spjBosp.filter(s => s.id !== id); saveData(); renderSpjTable(); updateStats(); }}
 
         function showSection(id) { const sections = ['beranda', 'data-siswa', 'buku-induk', 'buku-mutasi', 'surat-masuk', 'surat-keluar', 'spj-bosp', 'data-spj', 'pengaturan-kop']; sections.forEach(s => { const el = document.getElementById(`section-${s}`); if(el) el.classList.add('hidden'); const nav = document.getElementById(`nav-${s}`); if(nav) nav.classList.remove('bg-blue-700'); }); document.getElementById(`section-${id}`).classList.remove('hidden'); document.getElementById(`nav-${id}`).classList.add('bg-blue-700'); document.getElementById('page-title').innerText = id.replace('-', ' ').toUpperCase(); }
+        
         function openModal() { document.getElementById('student-modal').classList.remove('hidden'); }
-        function closeModal() { document.getElementById('student-modal').classList.add('hidden'); }
-        function openBukuIndukModal() { document.getElementById('induk-siswa-select').innerHTML = students.map(s => `<option value="${s.id}">${s.nama} (${s.nis})</option>`).join(''); document.getElementById('induk-modal').classList.remove('hidden'); }
-        function closeIndukModal() { document.getElementById('induk-modal').classList.add('hidden'); }
+        function closeModal() { document.getElementById('student-modal').classList.add('hidden'); document.getElementById('student-form').reset(); document.getElementById('student-form').id.value = ""; document.getElementById('student-modal-title').innerText = "Form Data Siswa"; }
+        
+        function openBukuIndukModal() { 
+            document.getElementById('induk-edit-id').value = "";
+            document.getElementById('induk-modal-title').innerText = "Registrasi Buku Induk";
+            document.getElementById('induk-siswa-select').innerHTML = students.map(s => `<option value="${s.id}">${s.nama} (${s.nis})</option>`).join(''); 
+            document.getElementById('induk-modal').classList.remove('hidden'); 
+        }
+        function closeIndukModal() { document.getElementById('induk-modal').classList.add('hidden'); document.getElementById('induk-form').reset(); }
+        
         function openMutasiModal() { document.getElementById('mutasi-modal').classList.remove('hidden'); toggleMutasiFields(); }
-        function closeMutasiModal() { document.getElementById('mutasi-modal').classList.add('hidden'); }
-        function toggleMutasiFields() { const form = document.getElementById('mutasi-form'); const jenis = form.jenis.value; document.getElementById('mutasi-asal-div').classList.toggle('hidden', jenis !== 'Masuk'); document.getElementById('mutasi-tujuan-div').classList.toggle('hidden', jenis !== 'Keluar'); }
+        function closeMutasiModal() { document.getElementById('mutasi-modal').classList.add('hidden'); document.getElementById('mutasi-form').reset(); document.getElementById('mutasi-form').id.value = ""; document.getElementById('mutasi-modal-title').innerText = "Log Mutasi Siswa"; }
+        
         function openSuratMasukModal() { document.getElementById('surat-masuk-modal').classList.remove('hidden'); }
-        function closeSuratMasukModal() { document.getElementById('surat-masuk-modal').classList.add('hidden'); }
+        function closeSuratMasukModal() { document.getElementById('surat-masuk-modal').classList.add('hidden'); document.getElementById('sm-form').reset(); document.getElementById('sm-form').id.value = ""; document.getElementById('sm-modal-title').innerText = "Input Surat Masuk"; }
+        
         function openSuratKeluarModal() { document.getElementById('surat-keluar-modal').classList.remove('hidden'); }
-        function closeSuratKeluarModal() { document.getElementById('surat-keluar-modal').classList.add('hidden'); }
+        function closeSuratKeluarModal() { document.getElementById('surat-keluar-modal').classList.add('hidden'); document.getElementById('sk-form').reset(); document.getElementById('sk-form').id.value = ""; document.getElementById('sk-modal-title').innerText = "Input Surat Keluar"; }
+        
         function openSpjModal() { document.getElementById('spj-modal').classList.remove('hidden'); }
-        function closeSpjModal() { document.getElementById('spj-modal').classList.add('hidden'); }
+        function closeSpjModal() { document.getElementById('spj-modal').classList.add('hidden'); document.getElementById('spj-form').reset(); document.getElementById('spj-form').id.value = ""; document.getElementById('spj-modal-title').innerText = "Form Input SPJ BOSP"; }
 
         function backupData() { const data = {}; Object.keys(STORAGE_KEYS).forEach(k => data[STORAGE_KEYS[k]] = localStorage.getItem(STORAGE_KEYS[k])); const blob = new Blob([JSON.stringify(data)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Backup_TAS_V1.1_SDN22TK_${new Date().toISOString().slice(0,10)}.json`; a.click(); showToast("Backup Berhasil!"); }
         function triggerRestore() { document.getElementById('restore-input').click(); }
