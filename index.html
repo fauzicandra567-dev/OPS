@@ -276,6 +276,7 @@
                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Nama Pengelola</td>
                                 <td class="py-3 text-slate-800 font-medium">Fauzi, S.Hum</td>
+                            </tr>
                              <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">NIP</td>
                                 <td class="py-3 text-slate-800 font-medium">199302082025211109</td>
@@ -283,7 +284,7 @@
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Unit Kerja</td>
                                 <td class="py-3 text-slate-800 font-medium">UPT SDN 22 Tanah Keras</td>
-                            <tr class="hover:bg-slate-50 transition-colors">
+                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Di Buat Oleh</td>
                                 <td class="py-3 text-slate-800 font-medium">Admin UPT SDN 22 Tanah Keras</td>
                             </tr>
@@ -864,8 +865,13 @@
         function saveKopSettings(e) { e.preventDefault(); kopSettings = { logoKiri: document.getElementById('set-kop-logo-kiri').value, logoKanan: document.getElementById('set-kop-logo-kanan').value, pemda: document.getElementById('set-kop-pemda').value, dinas: document.getElementById('set-kop-dinas').value, sekolah: document.getElementById('set-kop-sekolah').value, kecamatan: document.getElementById('set-kop-kecamatan').value, alamat: document.getElementById('set-kop-alamat').value, email: document.getElementById('set-kop-email').value, website: document.getElementById('set-kop-website').value }; localStorage.setItem(STORAGE_KEYS.setKop, JSON.stringify(kopSettings)); showToast("Kop Tersimpan!"); }
 
         function generateKopHtml() { 
-            let infoLine = `Alamat: ${kopSettings.alamat || 'Tanah Keras'}`;
-            if(kopSettings.email) infoLine += ` | Email: ${kopSettings.email}`;
+            let contactLine = "";
+            if(kopSettings.email) contactLine += `Email: ${kopSettings.email}`;
+            if(kopSettings.website) {
+                if(contactLine) contactLine += ` | `;
+                contactLine += `Website: ${kopSettings.website}`;
+            }
+
             return `<div style="display:flex; align-items:center; border-bottom:4px double #000; padding-bottom:8px; margin-bottom:15px; font-family:Times, serif;"> 
                 ${kopSettings.logoKiri ? `<div style="flex:1; text-align:left;"><img src="${kopSettings.logoKiri}" style="max-height:85px;"></div>` : ''} 
                 <div style="flex:4; text-align:center; text-transform:uppercase;"> 
@@ -873,7 +879,8 @@
                     <div style="font-size:17px; font-weight:bold;">${kopSettings.dinas || 'DINAS PENDIDIKAN'}</div> 
                     <div style="font-size:22px; font-weight:bold; margin:2px 0;">${kopSettings.sekolah || 'UPT SDN 22 TANAH KERAS'}</div> 
                     <div style="font-size:15px; font-weight:bold;">KECAMATAN ${kopSettings.kecamatan || 'BAYANG'}</div> 
-                    <div style="font-size:11px; text-transform:none; margin-top:4px;">${infoLine}</div> 
+                    <div style="font-size:11px; text-transform:none; margin-top:4px;">Alamat: ${kopSettings.alamat || 'Tanah Keras'}</div> 
+                    ${contactLine ? `<div style="font-size:11px; text-transform:none; margin-top:1px;">${contactLine}</div>` : ''}
                 </div> 
                 ${kopSettings.logoKanan ? `<div style="flex:1; text-align:right;"><img src="${kopSettings.logoKanan}" style="max-height:85px;"></div>` : ''} 
             </div>`; 
