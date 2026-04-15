@@ -67,7 +67,7 @@
                     <div class="mb-4">
                         <img src="https://iili.io/BeNtJTJ.png" alt="Logo SDN 22 TK" class="w-24 h-24 mx-auto object-contain drop-shadow-md">
                     </div>
-                    <h1 class="text-2xl font-bold text-slate-900">SDN 22 TANAH KERASK</h1>
+                    <h1 class="text-2xl font-bold text-slate-900">SDN 22 TANAH KERAS</h1>
                     <p class="text-slate-500">Silakan masuk ke akun Anda</p>
                 </div>
 
@@ -284,7 +284,7 @@
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Unit Kerja</td>
                                 <td class="py-3 text-slate-800 font-medium">UPT SDN 22 Tanah Keras</td>
-                             <tr class="hover:bg-slate-50 transition-colors">
+                            <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Di Buat Oleh</td>
                                 <td class="py-3 text-slate-800 font-medium">Admin UPT SDN 22 Tanah Keras</td>
                             </tr>
@@ -789,30 +789,43 @@
             const fNama = document.getElementById('filter-siswa-nama').value.toLowerCase();
             const fKelas = document.getElementById('filter-siswa-kelas').value;
             const filtered = students.filter(s => s.nama.toLowerCase().includes(fNama) && (fKelas === "" || s.kelas === fKelas));
-            document.getElementById('student-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3">${s.nama}</td><td class="p-3">${s.jk}</td><td class="p-3 font-semibold text-blue-800">${s.kelas}</td><td class="p-3 font-mono">${s.nik || '-'}</td><td class="p-3 font-mono text-xs">${s.nisn}/${s.nis}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editStudent(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteStudent(${s.id})" class="text-red-500 hover:bg-red-50 p-2 rounded transition-all"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+            document.getElementById('student-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3">${s.nama}</td><td class="p-3">${s.jk}</td><td class="p-3 font-semibold text-blue-800">${s.kelas}</td><td class="p-3 font-mono">${s.nik || '-'}</td><td class="p-3 font-mono text-xs">${s.nisn}/${s.nis}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editStudent(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteStudent(${s.id})" class="text-red-500 hover:bg-red-50 p-2 rounded transition-all"><i class="fas fa-trash"></i></button></div></td></tr>`).join('');
         }
 
         function renderIndukTable() { 
             const fNama = document.getElementById('filter-induk-nama').value.toLowerCase();
             const fTapel = document.getElementById('filter-induk-tapel').value.toLowerCase();
             const filtered = bukuInduk.filter(b => (b.nama || '').toLowerCase().includes(fNama) && (b.tapel || '').toLowerCase().includes(fTapel));
-            document.getElementById('induk-table-body').innerHTML = filtered.map(b => `<tr><td class="p-3 font-mono">${b.nis}</td><td class="p-3 font-bold">${b.nama}</td><td class="p-3">${b.jk}</td><td class="p-3 font-medium text-blue-700">${b.tapel || '-'}</td><td class="p-3">${b.tglMasukInduk}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editInduk(${b.idInduk})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteInduk(${b.idInduk})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+            document.getElementById('induk-table-body').innerHTML = filtered.map(b => `<tr><td class="p-3 font-mono">${b.nis}</td><td class="p-3 font-bold">${b.nama}</td><td class="p-3">${b.jk}</td><td class="p-3 font-medium text-blue-700">${b.tapel || '-'}</td><td class="p-3">${b.tglMasukInduk}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editInduk(${b.idInduk})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteInduk(${b.idInduk})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></div></td></tr>`).join(''); 
         }
 
         function renderMutasiTable() { 
             const fNama = document.getElementById('filter-mutasi-nama').value.toLowerCase();
             const fTapel = document.getElementById('filter-mutasi-tapel').value.toLowerCase();
             const filtered = bukuMutasi.filter(m => (m.nama || '').toLowerCase().includes(fNama) && (m.tapel || '').toLowerCase().includes(fTapel));
-            document.getElementById('mutasi-table-body').innerHTML = filtered.map(m => { const infoSekolah = m.jenis === 'Masuk' ? (m.asalSekolah || '-') : (m.tujuanSekolah || '-'); return `<tr><td class="p-3">${m.tanggal}</td><td class="p-3 font-bold">${m.nama}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] ${m.jenis === 'Masuk' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${m.jenis}</span></td><td class="p-3 font-medium text-blue-700">${m.tapel || '-'}</td><td class="p-3">${infoSekolah}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editMutasi(${m.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteMutasi(${m.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>`; }).join(''); 
+            document.getElementById('mutasi-table-body').innerHTML = filtered.map(m => { const infoSekolah = m.jenis === 'Masuk' ? (m.asalSekolah || '-') : (m.tujuanSekolah || '-'); return `<tr><td class="p-3">${m.tanggal}</td><td class="p-3 font-bold">${m.nama}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] ${m.jenis === 'Masuk' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${m.jenis}</span></td><td class="p-3 font-medium text-blue-700">${m.tapel || '-'}</td><td class="p-3">${infoSekolah}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editMutasi(${m.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteMutasi(${m.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></div></td></tr>`; }).join(''); 
         }
 
-        function renderSuratMasukTable() { const start = document.getElementById('filter-sm-start').value; const end = document.getElementById('filter-sm-end').value; let filtered = suratMasuk; if(start && end) filtered = suratMasuk.filter(s => s.tglMenerima >= start && s.tglMenerima <= end); document.getElementById('surat-masuk-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglMenerima}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.pengirim}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editSuratMasuk(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSuratMasuk(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function renderSuratKeluarTable() { const start = document.getElementById('filter-sk-start').value; const end = document.getElementById('filter-sk-end').value; let filtered = suratKeluar; if(start && end) filtered = suratKeluar.filter(s => s.tglSurat >= start && s.tglSurat <= end); document.getElementById('surat-keluar-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglSurat}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.tujuan}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="editSuratKeluar(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSuratKeluar(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function renderSuratMasukTable() { 
+            const start = document.getElementById('filter-sm-start').value; 
+            const end = document.getElementById('filter-sm-end').value; 
+            let filtered = suratMasuk; 
+            if(start && end) filtered = suratMasuk.filter(s => s.tglMenerima >= start && s.tglMenerima <= end); 
+            document.getElementById('surat-masuk-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglMenerima}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.pengirim}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editSuratMasuk(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSuratMasuk(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></div></td></tr>`).join(''); 
+        }
+        
+        function renderSuratKeluarTable() { 
+            const start = document.getElementById('filter-sk-start').value; 
+            const end = document.getElementById('filter-sk-end').value; 
+            let filtered = suratKeluar; 
+            if(start && end) filtered = suratKeluar.filter(s => s.tglSurat >= start && s.tglSurat <= end); 
+            document.getElementById('surat-keluar-table-body').innerHTML = filtered.map(s => `<tr><td class="p-3 text-xs">${s.tglSurat}</td><td class="p-3 font-mono text-xs">${s.noSurat}</td><td class="p-3">${s.tujuan}</td><td class="p-3 text-xs line-clamp-2" title="${s.perihal}">${s.perihal || '-'}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editSuratKeluar(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSuratKeluar(${s.id})" class="text-red-500"><i class="fas fa-trash"></i></button></div></td></tr>`).join(''); 
+        }
         
         function renderSpjTable() { 
             const q = document.getElementById('search-bku').value.toLowerCase(); 
             const f = spjBosp.filter(s => s.noBku.toLowerCase().includes(q)); 
-            document.getElementById('spj-table-body').innerHTML = f.map(s => `<tr><td class="p-3 font-bold font-mono text-blue-700">${s.noBku}</td><td class="p-3 text-xs">${s.tglKuitansi}</td><td class="p-3 font-semibold">${s.penerima}</td><td class="p-3 text-[11px] italic text-slate-500 max-w-[200px] truncate" title="${s.untukPembayaran}">${s.untukPembayaran}</td><td class="p-3 font-bold">Rp ${parseInt(s.jumlahUang).toLocaleString()}</td><td class="p-3 text-center flex justify-center gap-1"><button onclick="downloadSingleSpj(${s.id})" class="text-blue-600 hover:bg-blue-50 p-2 rounded transition-all"><i class="fas fa-print"></i></button><button onclick="editSpj(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSpj(${s.id})" class="text-red-500 p-2 rounded transition-all hover:bg-red-50"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+            document.getElementById('spj-table-body').innerHTML = f.map(s => `<tr><td class="p-3 font-bold font-mono text-blue-700">${s.noBku}</td><td class="p-3 text-xs">${s.tglKuitansi}</td><td class="p-3 font-semibold">${s.penerima}</td><td class="p-3 text-[11px] italic text-slate-500 max-w-[200px] truncate" title="${s.untukPembayaran}">${s.untukPembayaran}</td><td class="p-3 font-bold">Rp ${parseInt(s.jumlahUang).toLocaleString()}</td><td class="p-3 text-center"><div class="flex justify-center gap-2"><button onclick="downloadSingleSpj(${s.id})" class="text-blue-600 hover:bg-blue-50 p-2 rounded transition-all"><i class="fas fa-print"></i></button><button onclick="editSpj(${s.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteSpj(${s.id})" class="text-red-500 p-2 rounded transition-all hover:bg-red-50"><i class="fas fa-trash"></i></button></div></td></tr>`).join(''); 
         }
 
         function renderAllTables() { renderTable(); renderIndukTable(); renderMutasiTable(); renderSuratMasukTable(); renderSuratKeluarTable(); renderSpjTable(); }
@@ -993,6 +1006,13 @@
         function openMutasiModal() { document.getElementById('mutasi-modal').classList.remove('hidden'); toggleMutasiFields(); }
         function closeMutasiModal() { document.getElementById('mutasi-modal').classList.add('hidden'); document.getElementById('mutasi-form').reset(); document.getElementById('mutasi-form').id.value = ""; document.getElementById('mutasi-modal-title').innerText = "Log Mutasi Siswa"; }
         
+        function toggleMutasiFields() { 
+            const form = document.getElementById('mutasi-form'); 
+            const jenis = form.jenis.value; 
+            document.getElementById('mutasi-asal-div').classList.toggle('hidden', jenis !== 'Masuk'); 
+            document.getElementById('mutasi-tujuan-div').classList.toggle('hidden', jenis !== 'Keluar'); 
+        }
+
         function openSuratMasukModal() { document.getElementById('surat-masuk-modal').classList.remove('hidden'); }
         function closeSuratMasukModal() { document.getElementById('surat-masuk-modal').classList.add('hidden'); document.getElementById('sm-form').reset(); document.getElementById('sm-form').id.value = ""; document.getElementById('sm-modal-title').innerText = "Input Surat Masuk"; }
         
