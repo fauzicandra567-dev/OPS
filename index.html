@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fauzi</title>
+    <title>FAUZI</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://iili.io/BeNtJTJ.png">
@@ -271,19 +271,16 @@
                             </tr>
                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Versi</td>
-                                <td class="py-3 text-slate-800 font-medium">1.1.2</td>
+                                <td class="py-3 text-slate-800 font-medium">1.1.3</td>
                             </tr>
                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Nama Pengelola</td>
                                 <td class="py-3 text-slate-800 font-medium">Fauzi, S.Hum</td>
                             </tr>
-                            <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">NIP</td>
                                 <td class="py-3 text-slate-800 font-medium">199302082025211109</td>
                             </tr>
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="py-3 font-semibold text-slate-500">Unit Kerja</td>
-                                <td class="py-3 text-slate-800 font-medium">UPT SDN 22 Tanah Keras</td>
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">Dibuat Oleh</td>
                                 <td class="py-3 text-slate-800 font-medium">Admin UPT SDN 22 Tanah Keras</td>
@@ -410,7 +407,7 @@
             <section id="section-buku-mutasi" class="hidden space-y-6 fade-in">
                 <div class="bg-white p-6 rounded-xl shadow-sm border">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                        <h2 class="text-xl font-bold text-blue-900">Log Mutasi Siswa</h2>
+                        <h2 class="text-xl font-bold text-blue-900">Buku Mutasi Siswa</h2>
                         <div class="flex gap-2 w-full md:w-auto">
                             <button onclick="openMutasiModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center shadow-sm text-sm">
                                 <i class="fas fa-plus mr-2"></i> Tambah Log
@@ -444,6 +441,7 @@
                                     <th class="px-4 py-3">Jenis</th>
                                     <th class="px-4 py-3">Th Pelajaran</th>
                                     <th class="px-4 py-3">Asal/Tujuan</th>
+                                    <th class="px-4 py-3">Keterangan</th>
                                     <th class="px-4 py-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -1028,7 +1026,7 @@
             tbody.innerHTML = filtered.map(m => { 
                 const infoSekolah = m.jenis === 'Masuk' ? (m.asalSekolah || '-') : (m.tujuanSekolah || '-'); 
                 const ttl = (m.tmpLahir || '-') + ', ' + (m.tglLahir || '-');
-                return `<tr><td class="p-3">${m.tanggal}</td><td class="p-3 font-bold">${m.nama}</td><td class="p-3 font-mono text-blue-700">${m.nisn || '-'}</td><td class="p-3 text-[10px]">${ttl}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] ${m.jenis === 'Masuk' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${m.jenis}</span></td><td class="p-3 font-medium text-blue-700">${m.tapel || '-'}</td><td class="p-3">${infoSekolah}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editMutasi(${m.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteMutasi(${m.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></div></td></tr>`; 
+                return `<tr><td class="p-3">${m.tanggal}</td><td class="p-3 font-bold">${m.nama}</td><td class="p-3 font-mono text-blue-700">${m.nisn || '-'}</td><td class="p-3 text-[10px]">${ttl}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] ${m.jenis === 'Masuk' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${m.jenis}</span></td><td class="p-3 font-medium text-blue-700">${m.tapel || '-'}</td><td class="p-3">${infoSekolah}</td><td class="p-3 text-xs text-slate-500 italic">${m.keterangan || '-'}</td><td class="p-3 text-center"><div class="flex justify-center gap-1"><button onclick="editMutasi(${m.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded"><i class="fas fa-edit"></i></button><button onclick="deleteMutasi(${m.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></div></td></tr>`; 
             }).join(''); 
         }
 
@@ -1262,7 +1260,11 @@
         }
 
         function printBukuInduk() { const win = window.open('', '_blank'); const rows = bukuInduk.map(b => `<tr><td>${b.nis}</td><td>${b.nisn || '-'}</td><td>${b.nama}</td><td>${b.tmpLahir || '-'}, ${b.tglLahir || '-'}</td><td>${b.jk}</td><td>${b.tapel || '-'}</td><td>${b.tglMasukInduk}</td></tr>`).join(''); win.document.write(`<html><head><style>table{width:100%;border-collapse:collapse;font-size:11px;} th,td{border:1px solid #000;padding:5px; text-align:left;}</style></head><body>${generateKopHtml()}<h3 align="center">REKAP BUKU INDUK SISWA</h3><table><tr><th>NIS</th><th>NISN</th><th>Nama</th><th>TTL</th><th>JK</th><th>Th Pelajaran</th><th>Tgl Masuk</th></tr>${rows}</table><script>window.print();<\/script></body></html>`); win.document.close(); }
-        function printMutasi() { const win = window.open('', '_blank'); const rows = bukuMutasi.map(m => `<tr><td>${m.tanggal}</td><td>${m.nama}</td><td>${m.nisn || '-'}</td><td>${m.tmpLahir || '-'}, ${m.tglLahir || '-'}</td><td>${m.jenis}</td><td>${m.tapel || '-'}</td><td>${m.jenis === 'Masuk' ? m.asalSekolah : m.tujuanSekolah}</td></tr>`).join(''); win.document.write(`<html><head><style>table{width:100%;border-collapse:collapse;font-size:11px;} th,td{border:1px solid #000;padding:5px; text-align:left;}</style></head><body>${generateKopHtml()}<h3 align="center">LAPORAN MUTASI SISWA</h3><table><tr><th>Tgl</th><th>Nama</th><th>NISN</th><th>TTL</th><th>Jenis</th><th>Th Pelajaran</th><th>Asal/Tujuan</th></tr>${rows}</table><script>window.print();<\/script></body></html>`); win.document.close(); }
+        function printMutasi() { 
+            const win = window.open('', '_blank'); 
+            const rows = bukuMutasi.map(m => `<tr><td>${m.tanggal}</td><td>${m.nama}</td><td>${m.nisn || '-'}</td><td>${m.tmpLahir || '-'}, ${m.tglLahir || '-'}</td><td>${m.jenis}</td><td>${m.tapel || '-'}</td><td>${m.jenis === 'Masuk' ? (m.asalSekolah || '-') : (m.tujuanSekolah || '-')}</td><td>${m.keterangan || '-'}</td></tr>`).join(''); 
+            win.document.write(`<html><head><style>body{font-family:'Times New Roman', serif; padding:20px;} table{width:100%;border-collapse:collapse;font-size:10px;} th,td{border:1px solid #000;padding:6px; text-align:left;} th{background-color: #f2f2f2; text-align:center; text-transform:uppercase; font-weight:bold;}</style></head><body>${generateKopHtml()}<h3 align="center">LAPORAN MUTASI SISWA</h3><table><tr><th>Tgl</th><th>Nama</th><th>NISN</th><th>TTL</th><th>Jenis</th><th>Th Pelajaran</th><th>Asal/Tujuan Sekolah</th><th>Keterangan</th></tr>${rows || '<tr><td colspan="8" align="center">Tidak ada data mutasi</td></tr>'}</table><script>window.print();<\/script></body></html>`); win.document.close(); 
+        }
         function printSpjReport() { 
             const yearVal = document.getElementById('filter-spj-year')?.value || 'current';
             const q = (document.getElementById('search-bku')?.value || '').toLowerCase(); 
