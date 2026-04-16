@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAUZI</title>
+    <title>Fauzi</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://iili.io/BeNtJTJ.png">
@@ -277,7 +277,7 @@
                                 <td class="py-3 font-semibold text-slate-500">Nama Pengelola</td>
                                 <td class="py-3 text-slate-800 font-medium">Fauzi, S.Hum</td>
                             </tr>
-                             <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                            <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                                 <td class="py-3 font-semibold text-slate-500">NIP</td>
                                 <td class="py-3 text-slate-800 font-medium">199302082025211109</td>
                             </tr>
@@ -1124,13 +1124,16 @@
             container.innerHTML = spjArchive.map(item => {
                 const totalAmount = item.data.reduce((sum, s) => sum + parseInt(s.jumlahUang || 0), 0);
                 return `
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all group">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all group relative">
+                    <button onclick="deleteArchiveYear('${item.year}')" class="absolute top-3 right-3 text-slate-300 hover:text-red-600 transition-colors p-1" title="Hapus Arsip Tahun ${item.year}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                     <div class="flex justify-between items-start mb-3">
                         <div>
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Arsip Tahun</p>
                             <h4 class="text-xl font-black text-blue-900">${item.year}</h4>
                         </div>
-                        <i class="fas fa-folder-open text-blue-200 group-hover:text-blue-500 transition-colors"></i>
+                        <i class="fas fa-folder-open text-blue-200 group-hover:text-blue-500 transition-colors mt-1"></i>
                     </div>
                     <div class="space-y-1 mb-4">
                         <div class="flex justify-between text-[11px]">
@@ -1150,6 +1153,25 @@
             }).join('');
         }
 
+        function deleteArchiveYear(year) {
+            if(!confirm(`PERINGATAN KERAS: Anda akan menghapus SELURUH data arsip tahun ${year}. Data ini tidak dapat dikembalikan lagi setelah dihapus. Lanjutkan?`)) return;
+            
+            // Filter out the selected year
+            spjArchive = spjArchive.filter(a => a.year !== year);
+            
+            // Check if user is currently viewing the deleted year
+            const currentFilterYear = document.getElementById('filter-spj-year').value;
+            if(currentFilterYear === year) {
+                document.getElementById('filter-spj-year').value = 'current';
+            }
+            
+            saveData();
+            updateSpjYearFilter();
+            renderArchiveRekap();
+            renderSpjTable();
+            showToast(`Arsip tahun ${year} telah berhasil dihapus permanen.`);
+        }
+
         function viewArchiveYear(year) {
             const select = document.getElementById('filter-spj-year');
             if(select) {
@@ -1162,7 +1184,6 @@
         }
 
         function printSpecificArchive(year) {
-            // Kita gunakan logic printSpjReport yang sudah ada namun kita 'paksa' parameter tahunnya
             const originalVal = document.getElementById('filter-spj-year').value;
             document.getElementById('filter-spj-year').value = year;
             printSpjReport();
