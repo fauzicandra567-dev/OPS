@@ -28,12 +28,17 @@
             z-index: 0;
             pointer-events: none;
         }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
 
     <script>
-        // LINK DATABASE ANDA (DIHUBUNGKAN KE URL BARU)
+        // LINK DATABASE ANDA
         const scriptURL = "https://script.google.com/macros/s/AKfycbzd3Pdk4qBduy-FVrE5ArW1K7XkTtXB_Z-3JqGdIj2x7xHwLifJZvziaKZTO3dy0jb6/exec"; 
         const databaseURL = "https://docs.google.com/spreadsheets/d/1ZoBr1Yhw-O2fj1DMOhp5XNCg3PVkT0PNbMmtuyF95WE/edit?usp=sharing";
     </script>
@@ -87,7 +92,7 @@
                         <label class="block text-sm font-bold text-slate-700 mb-2">Kata Sandi</label>
                         <input type="password" id="login-pass" class="w-full p-3 border border-slate-300 rounded-xl outline-none" value="">
                     </div>
-                    <button onclick="checkLogin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">Masuk</button>
+                    <button onclick="checkLogin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">MasuK</button>
                     <div id="login-error" class="mt-4 text-center text-red-500 text-sm font-bold hidden italic">Username/Sandi Salah.</div>
                 </div>
             </div>
@@ -261,7 +266,7 @@
             <!-- LAPORAN -->
             <section id="sec-laporan" class="section-view hidden">
                 <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200 mb-6">
-                    <h2 class="text-2xl font-bold text-blue-900 mb-4 uppercase">Riwayat & Pengaturan Cetak</h2>
+                    <h2 class="text-2xl font-bold text-blue-900 mb-4 uppercase">Riwayat & Laporan</h2>
                     
                     <div class="p-6 bg-slate-50 rounded-xl border mb-6">
                         <h3 class="text-sm font-bold text-slate-700 mb-4 uppercase">Margin Halaman (mm)</h3>
@@ -275,7 +280,7 @@
                     </div>
 
                     <div class="flex justify-between items-center mb-6 gap-4">
-                        <input type="text" id="filter-bku" oninput="renderReports()" class="p-3 border rounded-xl w-full md:w-72 shadow-sm" placeholder="Cari No. BKU...">
+                        <input type="text" id="filter-bku" oninput="resetPageAndRender()" class="p-3 border rounded-xl w-full md:w-72 shadow-sm" placeholder="Cari No. BKU...">
                     </div>
 
                     <div class="overflow-x-auto rounded-xl border shadow-sm">
@@ -285,6 +290,15 @@
                             </tr></thead>
                             <tbody id="report-table-body" class="text-xs"></tbody>
                         </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="mt-6 flex items-center justify-between">
+                        <p id="pagination-info" class="text-sm font-bold text-slate-500"></p>
+                        <div class="flex gap-2">
+                            <button id="prev-page-btn" onclick="prevPage()" class="pagination-btn px-4 py-2 bg-blue-100 text-blue-900 font-bold rounded-lg hover:bg-blue-200 transition">Sebelumnya</button>
+                            <button id="next-page-btn" onclick="nextPage()" class="pagination-btn px-4 py-2 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition shadow-md">Selanjutnya</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -399,6 +413,10 @@
             email: "", web: "", mTop: 10, mBottom: 10, mLeft: 10, mRight: 10 
         };
 
+        // Paginasi
+        let currentPage = 1;
+        const rowsPerPage = 7;
+
         // --- CUSTOM UI SYSTEM ---
         function showConfirm(msg, onYes) {
             const overlay = document.getElementById('confirm-overlay');
@@ -488,6 +506,7 @@
         async function saveReceipt() {
             const calc = updateCalculations();
             if(!document.getElementById('k-bku').value) return notify("No BKU wajib!", "bg-red-600");
+            
             notify("Sedang Menyimpan...", "bg-blue-600");
             const data = {
                 action: "saveReceipt", bku: document.getElementById('k-bku').value,
@@ -496,13 +515,15 @@
                 untuk: document.getElementById('k-untuk').value, taxName: calc.taxName, taxVal: calc.taxVal,
                 taxRate: calc.taxRate, dpp: calc.dpp, terbilang: document.getElementById('res-terbilang').innerText, jumlah: calc.total
             };
+            
             const res = await apiRequest(data, "Menyimpan...");
             if(res?.status === "success") { 
                 reports.push(data); 
-                notify("Berhasil Menyimpan!", "bg-green-600"); 
-                openPrintWindow(data); 
+                notify("Berhasil Menyimpan ke Database!", "bg-green-600"); 
+                // PERBAIKAN: Tidak lagi memanggil openPrintWindow secara otomatis saat simpan
                 updateHomeStats();
                 resetForm();
+                renderReports();
             }
         }
 
@@ -523,7 +544,9 @@
         // --- PRINT LOGIC ---
         function openPrintWindow(d) {
             const printWin = window.open('', '_blank');
-            if(!printWin) return notify("Popup Diblokir!", "bg-red-600");
+            // PERBAIKAN: Menghapus notifikasi "Popup Diblokir" sesuai permintaan
+            if(!printWin) return; 
+            
             const template = document.getElementById('print-template').innerHTML;
             const formatDate = (ds) => ds ? new Date(ds).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : "";
             const escapeStr = (s) => String(s || "").replace(/"/g, '\\"').replace(/\n/g, ' ');
@@ -628,7 +651,6 @@
                 document.getElementById('ttd-nip-bendahara').value = signatories.nipBendahara || "";
             }
             
-            // Set href untuk tombol database
             const dbBtn = document.getElementById('btn-cloud-db');
             if(dbBtn) dbBtn.href = databaseURL;
         }
@@ -679,7 +701,10 @@
         function showSection(id) {
             document.querySelectorAll('.section-view').forEach(s => s.classList.add('hidden'));
             document.getElementById('sec-'+id).classList.remove('hidden');
-            if(id === 'laporan') renderReports();
+            if(id === 'laporan') {
+                currentPage = 1;
+                renderReports();
+            }
         }
 
         function updateHomeStats() {
@@ -691,16 +716,60 @@
             document.getElementById('stat-total-pajak').innerText = formatIDR(totalTax);
         }
 
+        function resetPageAndRender() {
+            currentPage = 1;
+            renderReports();
+        }
+
         function renderReports() {
             const tbody = document.getElementById('report-table-body');
             if(!tbody) return;
             const filter = (document.getElementById('filter-bku')?.value || "").toLowerCase();
             const filtered = reports.filter(r => String(r.bku).toLowerCase().includes(filter));
-            filtered.sort((a,b) => (parseInt(String(a.bku).match(/\d+/)) || 0) - (parseInt(String(b.bku).match(/\d+/)) || 0));
-            tbody.innerHTML = filtered.map((r, i) => {
+            
+            // Urutkan: Sekarang mengurutkan ASCENDING (nomor urut terkecil/BKU 01 di atas)
+            filtered.sort((a,b) => {
+                const numA = parseInt(String(a.bku).match(/\d+/)) || 0;
+                const numB = parseInt(String(b.bku).match(/\d+/)) || 0;
+                return numA - numB; // ASCENDING: BKU 01 di atas
+            });
+
+            // Paginasi Logika
+            const totalItems = filtered.length;
+            const totalPages = Math.ceil(totalItems / rowsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const paginatedItems = filtered.slice(startIndex, startIndex + rowsPerPage);
+
+            tbody.innerHTML = paginatedItems.map((r) => {
                 const actualIdx = reports.indexOf(r);
-                return `<tr class="border-b hover:bg-slate-50 transition"><td class="p-4 font-bold text-blue-800">${r.bku}</td><td class="p-4">${r.penerima}</td><td class="p-4 text-right font-bold text-blue-900">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td><td class="p-4 text-center space-x-2"><button onclick="printFromHistory(${actualIdx})" class="text-blue-600 font-bold hover:underline">Cetak</button><button onclick="deleteRecord(${actualIdx})" class="text-red-500 font-bold hover:underline">Hapus</button></td></tr>`;
+                return `
+                <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-4 font-bold text-blue-800">${r.bku}</td>
+                    <td class="p-4">${r.penerima}</td>
+                    <td class="p-4 text-right font-bold text-blue-900">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td>
+                    <td class="p-4 text-center space-x-2">
+                        <button onclick="printFromHistory(${actualIdx})" class="text-blue-600 font-bold hover:underline">Cetak</button>
+                        <button onclick="deleteRecord(${actualIdx})" class="text-red-500 font-bold hover:underline">Hapus</button>
+                    </td>
+                </tr>`;
             }).join('');
+
+            // UI Update Paginasi
+            document.getElementById('pagination-info').innerText = `Halaman ${currentPage} dari ${totalPages} (${totalItems} Data)`;
+            document.getElementById('prev-page-btn').disabled = currentPage === 1;
+            document.getElementById('next-page-btn').disabled = currentPage === totalPages;
+        }
+
+        function nextPage() {
+            currentPage++;
+            renderReports();
+        }
+
+        function prevPage() {
+            currentPage--;
+            renderReports();
         }
 
         function renderTaxList() { document.getElementById('tax-list').innerHTML = (taxes || []).map(t => `<div class="bg-white p-3 border rounded-xl font-bold text-xs shadow-sm">${t.name} (${t.rate}%)</div>`).join(''); }
@@ -710,7 +779,6 @@
             taxes.forEach((t, i) => s.innerHTML += `<option value="${i}">${t.name} (${t.rate}%)</option>`);
         }
 
-        // Helper untuk mengubah string menjadi Title Case (Huruf Besar di Tiap Awal Kata)
         function toTitleCase(str) {
             return str.split(' ').map(word => {
                 if (!word) return "";
@@ -735,8 +803,6 @@
             
             const total = amountInput + taxVal;
             const rawTerbilang = terbilang(total) + " rupiah";
-            
-            // PERBAIKAN: Mengubah terbilang menjadi Title Case (Besar Tiap Awal Kata)
             const formattedTerbilang = toTitleCase(rawTerbilang);
             
             document.getElementById('res-total-val').innerText = formatIDR(total);
@@ -766,8 +832,6 @@
             const calc = updateCalculations();
             if(!document.getElementById('k-bku').value) return notify("Lengkapi data kuitansi!", "bg-red-600");
             const rawTerbilang = terbilang(calc.total) + " rupiah";
-            
-            // PERBAIKAN: Mengubah terbilang menjadi Title Case (Besar Tiap Awal Kata) untuk fungsi cetak
             const formattedTerbilang = toTitleCase(rawTerbilang);
             
             openPrintWindow({
@@ -778,6 +842,7 @@
                 taxVal: calc.taxVal, taxRate: calc.taxRate, dpp: calc.dpp, jumlah: calc.total
             });
         }
+
         function printFromHistory(idx) { if(reports[idx]) openPrintWindow(reports[idx]); }
         function logout() { location.reload(); }
         function resetForm() {
