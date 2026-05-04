@@ -129,7 +129,7 @@
             <section id="sec-beranda" class="section-view">
                 <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-blue-900 uppercase">Statistik Database</h2>
+                        <h2 class="text-2xl font-bold text-blue-900 uppercase">Statistik</h2>
                         <!-- Tombol Database -->
                         <a id="btn-cloud-db" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition transform active:scale-95 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -358,11 +358,23 @@
             <!-- Pajak -->
             <div style="margin-top: 20px; margin-bottom: 30px; position: relative; z-index: 10;">
                 <p style="font-weight: bold; margin-bottom: 5px;">Rincian Pajak:</p>
-                <table style="width: 100%; border-collapse: collapse; font-size: 10pt;">
-                    <thead><tr style="background: #f2f2f2;"><th style="border: 1px solid black; padding: 8px; text-align: left; width: 60%;">Keterangan</th><th style="border: 1px solid black; padding: 8px; text-align: right; width: 40%;">Jumlah (Rp)</th></tr></thead>
+                <!-- Perbaikan: Tabel Keterangan Jumlah dibuat Transparan sepenuhnya -->
+                <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: transparent;">
+                    <thead>
+                        <tr style="background: transparent;">
+                            <th style="border: 1px solid black; padding: 8px; text-align: left; width: 60%; background: transparent;">Keterangan</th>
+                            <th style="border: 1px solid black; padding: 8px; text-align: right; width: 40%; background: transparent;">Jumlah (Rp)</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr><td style="border: 1px solid black; padding: 6px;">Dasar Pengenaan Pajak (DPP)</td><td id="p-row-dpp" style="border: 1px solid black; padding: 6px; text-align: right;"></td></tr>
-                        <tr><td id="p-label-pajak" style="border: 1px solid black; padding: 6px;">Pajak</td><td id="p-row-pajak" style="border: 1px solid black; padding: 6px; text-align: right;">0</td></tr>
+                        <tr style="background: transparent;">
+                            <td style="border: 1px solid black; padding: 6px; background: transparent;">Dasar Pengenaan Pajak (DPP)</td>
+                            <td id="p-row-dpp" style="border: 1px solid black; padding: 6px; text-align: right; background: transparent;"></td>
+                        </tr>
+                        <tr style="background: transparent;">
+                            <td id="p-label-pajak" style="border: 1px solid black; padding: 6px; background: transparent;">Pajak</td>
+                            <td id="p-row-pajak" style="border: 1px solid black; padding: 6px; text-align: right; background: transparent;">0</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -529,8 +541,8 @@
             const htmlContent = `<html><head><title>Kuitansi ${d.bku}</title><style>
                 @page { size: 210mm 330mm; margin: 0; }
                 body { font-family: 'Times New Roman', serif; padding: 0; margin: 0; background: white; color: black; }
-                table { width: 100%; border-collapse: collapse; }
-                td { vertical-align: top; padding: 2px 0; }
+                table { width: 100%; border-collapse: collapse; background: transparent; }
+                td, th { vertical-align: top; padding: 2px 0; background: transparent; }
                 .receipt-watermark {
                     position: absolute;
                     top: 55%;
