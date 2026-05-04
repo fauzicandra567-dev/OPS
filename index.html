@@ -710,6 +710,14 @@
             taxes.forEach((t, i) => s.innerHTML += `<option value="${i}">${t.name} (${t.rate}%)</option>`);
         }
 
+        // Helper untuk mengubah string menjadi Title Case (Huruf Besar di Tiap Awal Kata)
+        function toTitleCase(str) {
+            return str.split(' ').map(word => {
+                if (!word) return "";
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }).join(' ');
+        }
+
         function updateCalculations() {
             const amountInput = parseFloat(document.getElementById('k-jumlah').value) || 0;
             const idx = document.getElementById('k-pajak-select').value;
@@ -727,7 +735,9 @@
             
             const total = amountInput + taxVal;
             const rawTerbilang = terbilang(total) + " rupiah";
-            const formattedTerbilang = rawTerbilang.charAt(0).toUpperCase() + rawTerbilang.slice(1).toLowerCase();
+            
+            // PERBAIKAN: Mengubah terbilang menjadi Title Case (Besar Tiap Awal Kata)
+            const formattedTerbilang = toTitleCase(rawTerbilang);
             
             document.getElementById('res-total-val').innerText = formatIDR(total);
             document.getElementById('res-terbilang').innerText = formattedTerbilang;
@@ -756,7 +766,10 @@
             const calc = updateCalculations();
             if(!document.getElementById('k-bku').value) return notify("Lengkapi data kuitansi!", "bg-red-600");
             const rawTerbilang = terbilang(calc.total) + " rupiah";
-            const formattedTerbilang = rawTerbilang.charAt(0).toUpperCase() + rawTerbilang.slice(1).toLowerCase();
+            
+            // PERBAIKAN: Mengubah terbilang menjadi Title Case (Besar Tiap Awal Kata) untuk fungsi cetak
+            const formattedTerbilang = toTitleCase(rawTerbilang);
+            
             openPrintWindow({
                 bku: document.getElementById('k-bku').value, rekening: document.getElementById('k-rekening').value,
                 dari: document.getElementById('k-dari').value, penerima: document.getElementById('k-penerima').value, 
