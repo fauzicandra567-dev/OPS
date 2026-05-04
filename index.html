@@ -33,8 +33,8 @@
 <body class="bg-slate-50 font-sans text-slate-800">
 
     <script>
-        // LINK DATABASE ANDA
-        const scriptURL = "https://script.google.com/macros/s/AKfycbyZirOAbp1utuLMBmyVQ8-iWPfT17s0IzOWlXSRE_d5kne4oBPFOaI8vqwczQi1hwE3/exec"; 
+        // LINK DATABASE ANDA (DIHUBUNGKAN KE URL BARU)
+        const scriptURL = "https://script.google.com/macros/s/AKfycbzd3Pdk4qBduy-FVrE5ArW1K7XkTtXB_Z-3JqGdIj2x7xHwLifJZvziaKZTO3dy0jb6/exec"; 
         const databaseURL = "https://docs.google.com/spreadsheets/d/1ZoBr1Yhw-O2fj1DMOhp5XNCg3PVkT0PNbMmtuyF95WE/edit?usp=sharing";
     </script>
 
@@ -129,8 +129,8 @@
             <section id="sec-beranda" class="section-view">
                 <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-blue-900 uppercase">Statistik</h2>
-                        <!-- Tombol Database Baru -->
+                        <h2 class="text-2xl font-bold text-blue-900 uppercase">Statistik Database</h2>
+                        <!-- Tombol Database -->
                         <a id="btn-cloud-db" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition transform active:scale-95 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             Database
@@ -657,7 +657,7 @@
             if(document.getElementById('login-user').value === "SDN22" && document.getElementById('login-pass').value === "12345") {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
-                simulateProgress("Singkronisasi", loadAllData).then(() => {
+                simulateProgress("Singkronisasi Cloud", loadAllData).then(() => {
                     showSection('beranda');
                     notify("Selamat Datang!", "bg-green-600");
                 });
