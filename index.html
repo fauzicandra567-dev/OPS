@@ -673,7 +673,7 @@
             if(document.getElementById('login-user').value === "SDN22" && document.getElementById('login-pass').value === "12345") {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
-                simulateProgress("Singkronisasi", loadAllData).then(() => {
+                simulateProgress("Sedang Login", loadAllData).then(() => {
                     showSection('beranda');
                     notify("Selamat Datang!", "bg-green-600");
                 });
