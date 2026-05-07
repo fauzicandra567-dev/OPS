@@ -567,7 +567,7 @@
         function printFromArchive(idx) { if(archiveReports[idx]) openPrintWindow(archiveReports[idx]); }
 
         function startSyncProcess() {
-            showConfirm("Sinkronkan ulang database?", () => {
+            showConfirm("Apa Yakin Mau Tarik Data?", () => {
                 simulateProgress("Tarik Data", loadAllData).then(() => {
                     notify("Berhasil Tarik Data!", "bg-green-600");
                 });
