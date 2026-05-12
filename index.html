@@ -2,30 +2,34 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SDN 22 TANAH KERAS</title>
-    <link rel="icon" type="image/png" href="https://iili.io/BLmT2LJ.md.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        
-    <!-- PWA & Mobile Capabilities -->
-    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Meta Tags untuk Full Screen (PWA Mode) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SDN 22 TANAH KERAS">
-    <meta name="theme-color" content="#1e3a8a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1e3a8a"> <!-- Warna Blue-900 sesuai tema -->
+    <meta name="apple-mobile-web-app-title" content="Kuitansi SDN22">
     
-    <!-- Manifest Inline untuk Mode Standalone (Layar Penuh) -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJkZWZhdWx0X2xvY2FsZSI6ICJpZCIsCiAgIm5hbWUiOiAiU2lzdGVtIEFkbWluaXN0cmFzaSBHdXJ1IiwKICAic2hvcnRfbmFtZSI6ICJBZG1pbiBHdXJ1IiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxZTNhOGEiLAogICJ0aGVtZV9jb2xvciI6ICIjMWUzYThhIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9paWxpLmlvL0JlOEh2YnAuanBnIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9qcGVnIgogICAgfQogIF0KfQ==">
+    <link rel="icon" type="image/png" href="https://iili.io/BLmT2LJ.md.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
         .section-view { transition: opacity 0.2s ease-in-out; }
-        
         /* Ukuran F4 standar: 210mm x 330mm */
         #print-template { font-family: 'Times New Roman', serif; color: black; width: 210mm; margin: 0 auto; }
         @media print { .no-print { display: none !important; } body { background: white; } }
+        
         .login-split { display: flex; min-height: 100vh; }
         .login-left { flex: 1; display: flex; align-items: center; justify-content: center; background: white; padding: 2rem; }
         .login-right { flex: 1.2; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); display: flex; align-items: center; justify-content: center; padding: 4rem; color: white; position: relative; overflow: hidden; }
-        @media (max-width: 768px) { .login-split { flex-direction: column; } .login-right { display: none; } }
+        
+        @media (max-width: 768px) { 
+            .login-split { flex-direction: column; } 
+            .login-right { display: none; } 
+        }
+        
         .loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200; }
         
         /* Gaya Watermark */
@@ -44,14 +48,48 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
+        /* Support for standalone display */
+        :viewport { width: device-width; }
     </style>
+
+    <!-- Script Otomatis Manifest untuk Mode Full Screen -->
+    <script>
+        const manifest = {
+            "name": "Kuitansi Digital SDN 22",
+            "short_name": "SDN22",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#f8fafc",
+            "theme_color": "#1e3a8a",
+            "icons": [
+                {
+                    "src": "https://iili.io/BLmT2LJ.md.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://iili.io/BLmT2LJ.md.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const stringManifest = JSON.stringify(manifest);
+        const blob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+    </script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
 
     <script>
         // LINK DATABASE TERBARU ANDA - DIPERBARUI
         const scriptURL = "https://script.google.com/macros/s/AKfycby7zVAcUhibjUCNYv6WELJtU9tC_oCVHHjYD1ZtDxhO75R_SxkPsF_MJfadp5XIR_NX/exec"; 
-        const databaseURL = "https://docs.google.com/spreadsheets/d/1-6KAPCi2VYw2Yi0dejkmjE-GkpAHaet9CnkuVvbl5GE/edit?usp=sharing";
+        const databaseURL = "https://docs.google.com/spreadsheets/d/1ZoBr1Yhw-O2fj1DMOhp5XNCg3PVkT0PNbMmtuyF95WE/edit?usp=sharing";
     </script>
 
     <!-- PROGRESS OVERLAY -->
@@ -62,7 +100,7 @@
                 <div id="progress-bar" class="bg-blue-600 h-full transition-all duration-300" style="width: 0%"></div>
             </div>
             <p id="progress-percent" class="text-2xl font-black text-blue-900">0%</p>
-            <p id="progress-status" class="text-xs text-slate-500 italic mt-2">Tunggu Sebentar</p>
+            <p id="progress-status" class="text-xs text-slate-500 italic mt-2">Harap Tunggu</p>
         </div>
     </div>
 
@@ -91,7 +129,7 @@
         <div class="login-left">
             <div class="w-full max-w-md">
                 <div class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-blue-900">SDN 22 TANAH KERAS</h1>
+                    <h1 class="text-3xl font-bold text-blue-900">SDN 22 Tanah Keras</h1>
                     <p class="text-slate-500 mt-2">Sistem Informasi Pengelolaan Kuitansi</p>
                 </div>
                 <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-xl">
@@ -103,7 +141,7 @@
                         <label class="block text-sm font-bold text-slate-700 mb-2">Kata Sandi</label>
                         <input type="password" id="login-pass" class="w-full p-3 border border-slate-300 rounded-xl outline-none" value="">
                     </div>
-                    <button onclick="checkLogin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">Masuk</button>
+                    <button onclick="checkLogin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">Masuk ke Sistem</button>
                     <div id="login-error" class="mt-4 text-center text-red-500 text-sm font-bold hidden italic">Username/Sandi Salah.</div>
                 </div>
             </div>
@@ -111,7 +149,7 @@
         <div class="login-right">
             <div class="relative z-10 max-w-xl text-center">
                 <h2 class="text-4xl font-serif leading-tight italic mb-6">"Pendidikan adalah tiket ke masa depan. Hari esok dimiliki oleh orang-orang yang mempersiapkan dirinya sejak hari ini."</h2>
-                <p class="text-xl text-blue-200">SDN 22 TANAH KERAS</p>
+                <p class="text-xl text-blue-200">SDN 22 Tanah Keras</p>
             </div>
         </div>
     </div>
@@ -578,9 +616,9 @@
         function printFromArchive(idx) { if(archiveReports[idx]) openPrintWindow(archiveReports[idx]); }
 
         function startSyncProcess() {
-            showConfirm("Apa Yakin Mau Tarik Data?", () => {
+            showConfirm("Sinkronkan ulang database?", () => {
                 simulateProgress("Tarik Data", loadAllData).then(() => {
-                    notify("Berhasil Tarik Data!", "bg-green-600");
+                    notify("Berhasil Tarik Data", "bg-green-600");
                 });
             });
         }
