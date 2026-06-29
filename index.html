@@ -637,7 +637,7 @@
             const res = await apiRequest(data, "Menyimpan...");
             if(res?.status === "success") { 
                 reports.push(data); 
-                notify("Berhasil Menyimpan ke Database!", "bg-green-600"); 
+                notify("Berhasil Menyimpan!", "bg-green-600"); 
                 updateHomeStats();
                 resetForm();
                 renderReports();
